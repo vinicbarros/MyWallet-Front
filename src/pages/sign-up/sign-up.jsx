@@ -1,21 +1,21 @@
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-export default function SignIn() {
+export function SignUp() {
   return (
-    <>
-      <Container>
-        <Title>MyWallet</Title>
-        <Form>
-          <input placeholder="E-mail" />
-          <input placeholder="Senha" />
-          <button type="submit">Entrar</button>
-        </Form>
-        <Link to="sign-up">
-          <a>Primeira vez? Cadastre-se!</a>
-        </Link>
-      </Container>
-    </>
+    <Container>
+      <Title>MyWallet</Title>
+      <Form>
+        <input placeholder="Nome" />
+        <input placeholder="E-mail" />
+        <input placeholder="Senha" />
+        <input placeholder="Confirme a senha" />
+        <button type="submit">Cadastrar</button>
+      </Form>
+      <Link to="/">
+        <a>Já tem uma conta? Entre agora!</a>
+      </Link>
+    </Container>
   );
 }
 
