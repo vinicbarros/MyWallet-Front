@@ -1,15 +1,62 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export function SignUp() {
+  const [formVal, setFormVal] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirm: "",
+  });
+
+  function handleForm(e) {
+    e.preventDefault();
+    const equal = formVal.password === formVal.confirm;
+    if (!equal) return console.log("Senhas não estão iguais!");
+    console.log(formVal);
+  }
+
+  function handleInput(e) {
+    let value = e.target.value;
+    setFormVal({ ...formVal, [e.target.name]: value });
+  }
   return (
     <Container>
       <Title>MyWallet</Title>
-      <Form>
-        <input placeholder="Nome" />
-        <input placeholder="E-mail" />
-        <input placeholder="Senha" />
-        <input placeholder="Confirme a senha" />
+      <Form onSubmit={handleForm}>
+        <input
+          onChange={handleInput}
+          value={formVal.name}
+          name="name"
+          type="text"
+          placeholder="Nome"
+          required
+        />
+        <input
+          onChange={handleInput}
+          name="email"
+          value={formVal.email}
+          type="e-mail"
+          placeholder="E-mail"
+          required
+        />
+        <input
+          onChange={handleInput}
+          name="password"
+          value={formVal.password}
+          type="password"
+          placeholder="Senha"
+          required
+        />
+        <input
+          onChange={handleInput}
+          name="confirm"
+          value={formVal.confirm}
+          type="password"
+          placeholder="Confirme a senha"
+          required
+        />
         <button type="submit">Cadastrar</button>
       </Form>
       <Link to="/">
