@@ -1,18 +1,48 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function SignIn() {
+  const [userLogin, setUserLogin] = useState({
+    email: "",
+    password: "",
+  });
+
+  function handleForm(e) {
+    e.preventDefault();
+  }
+
+  function handleSignIn(e) {
+    const value = e.target.value;
+    setUserLogin({ ...userLogin, [e.target.name]: value });
+  }
+
   return (
     <>
       <Container>
         <Title>MyWallet</Title>
-        <Form>
-          <input placeholder="E-mail" />
-          <input placeholder="Senha" />
-          <button type="submit">Entrar</button>
+        <Form onSubmit={handleForm}>
+          <input
+            autoComplete="off"
+            onChange={handleSignIn}
+            value={userLogin.email}
+            name="email"
+            type="text"
+            placeholder="E-mail"
+            required
+          />
+          <input
+            onChange={handleSignIn}
+            value={userLogin.password}
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+          />
+          <button type="submit">Enter</button>
         </Form>
         <Link to="sign-up">
-          <a>Primeira vez? Cadastre-se!</a>
+          <a>First time here? Sign up!</a>
         </Link>
       </Container>
     </>

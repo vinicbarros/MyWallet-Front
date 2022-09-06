@@ -30,7 +30,7 @@ export function SignUp() {
           value={formVal.name}
           name="name"
           type="text"
-          placeholder="Nome"
+          placeholder="Name"
           required
         />
         <input
@@ -46,7 +46,7 @@ export function SignUp() {
           name="password"
           value={formVal.password}
           type="password"
-          placeholder="Senha"
+          placeholder="Password"
           required
         />
         <input
@@ -54,13 +54,13 @@ export function SignUp() {
           name="confirm"
           value={formVal.confirm}
           type="password"
-          placeholder="Confirme a senha"
+          placeholder="Confirm your password"
           required
         />
-        <button type="submit">Cadastrar</button>
+        <button type="submit">Sign up</button>
       </Form>
       <Link to="/">
-        <a>Já tem uma conta? Entre agora!</a>
+        <a>Already have an account? Sign in!</a>
       </Link>
     </Container>
   );
