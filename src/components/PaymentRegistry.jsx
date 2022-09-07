@@ -21,6 +21,6 @@ const Container = styled.div`
   justify-content: center;
   background-color: #ffffff;
   border-radius: 5px;
-  height: 75vh;
+  height: 68vh;
   margin-top: 22px;
 `;
