@@ -1,15 +1,45 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { postSignIn } from "../../services/MyWallet";
+import UserContext from "../../context/userContext";
 
 export default function SignIn() {
   const [userLogin, setUserLogin] = useState({
     email: "",
     password: "",
   });
+  const [error, setError] = useState({
+    isError: false,
+    message: "",
+  });
 
-  function handleForm(e) {
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  async function handleForm(e) {
     e.preventDefault();
+
+    try {
+      const data = await postSignIn({
+        email: userLogin.email,
+        password: userLogin.password,
+      });
+      console.log(data.data);
+      setUser(data.data);
+      const JSONauth = JSON.stringify({
+        token: data.data.token,
+        name: data.data.name,
+      });
+      localStorage.setItem("mywallet", JSONauth);
+      console.log(data);
+      navigate("/home");
+    } catch (error) {
+      setError({
+        isError: true,
+        message: error.response.data.message,
+      });
+    }
   }
 
   function handleSignIn(e) {
@@ -39,6 +69,7 @@ export default function SignIn() {
             placeholder="Password"
             required
           />
+          {error.isError ? <h5>{error.message}</h5> : <></>}
           <button type="submit">Enter</button>
         </Form>
         <Link to="sign-up">
@@ -95,6 +126,14 @@ const Form = styled.form`
     font-size: 20px;
     font-weight: 500;
     color: black;
+  }
+
+  h5 {
+    color: #ffffff;
+    text-decoration: underline;
+    font-weight: bold;
+    margin-bottom: 12px;
+    font-size: 15px;
   }
 
   button {

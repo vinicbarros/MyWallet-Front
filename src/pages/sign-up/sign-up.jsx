@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { postSignUp } from "../../services/MyWallet";
 
 export function SignUp() {
   const [formVal, setFormVal] = useState({
@@ -9,12 +10,40 @@ export function SignUp() {
     password: "",
     confirm: "",
   });
+  const [error, setError] = useState({
+    isError: false,
+    message: "",
+  });
+  const navigate = useNavigate();
 
-  function handleForm(e) {
+  async function handleForm(e) {
     e.preventDefault();
+    setError({
+      isError: false,
+      message: "",
+    });
     const equal = formVal.password === formVal.confirm;
-    if (!equal) return console.log("Senhas não estão iguais!");
-    console.log(formVal);
+    if (!equal) {
+      setError({
+        isError: true,
+        message: "Password do not match.",
+      });
+      return;
+    }
+
+    try {
+      await postSignUp({
+        name: formVal.name,
+        email: formVal.email,
+        password: formVal.password,
+      });
+      navigate("/");
+    } catch (error) {
+      setError({
+        isError: true,
+        message: error.response.data.message,
+      });
+    }
   }
 
   function handleInput(e) {
@@ -57,6 +86,7 @@ export function SignUp() {
           placeholder="Confirm your password"
           required
         />
+        {error.isError ? <h5>{error.message}</h5> : <></>}
         <button type="submit">Sign up</button>
       </Form>
       <Link to="/">
@@ -112,6 +142,14 @@ const Form = styled.form`
     font-size: 20px;
     font-weight: 500;
     color: black;
+  }
+
+  h5 {
+    color: #ffffff;
+    text-decoration: underline;
+    font-weight: bold;
+    margin-bottom: 12px;
+    font-size: 15px;
   }
 
   button {
