@@ -3,20 +3,40 @@ import SignIn from "./pages/sign-in/sign-in";
 import GlobalStyle from "./assets/style/GlobalStyle";
 import { SignUp } from "./pages/sign-up/sign-up";
 import HomePage from "./pages/home/homePage";
-import Payments from "./pages/Payments/Payments";
+import Transactions from "./pages/Transactions/Transactions";
+import UserContext from "./context/userContext";
+import { useState } from "react";
+import PrivatePage from "./components/PrivatePage";
 
 function App() {
+  const [user, setUser] = useState(null);
   return (
     <>
       <GlobalStyle />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<SignIn />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/transactions" element={<Payments />} />
-        </Routes>
-      </BrowserRouter>
+      <UserContext.Provider value={{ user, setUser }}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<SignIn />} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route
+              path="/home"
+              element={
+                <PrivatePage>
+                  <HomePage />
+                </PrivatePage>
+              }
+            />
+            <Route
+              path="/transactions"
+              element={
+                <PrivatePage>
+                  <Transactions />
+                </PrivatePage>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </UserContext.Provider>
     </>
   );
 }
