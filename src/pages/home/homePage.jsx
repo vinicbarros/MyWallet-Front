@@ -1,19 +1,29 @@
 import styled from "styled-components";
 import PaymentRegistry from "../../components/PaymentRegistry";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
+import { BiExit } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const name = JSON.parse(localStorage.getItem("mywallet")).name;
 
   function receiptOrEntrance(type) {
     navigate("/transactions", { state: { type: type } });
   }
 
+  function exitUser() {
+    localStorage.removeItem("mywallet");
+    navigate("/");
+  }
+
   return (
     <Container>
       <Box>
-        <Title>Hi, Fulano</Title>
+        <Wrap>
+          <Title>Hi, {name}</Title>
+          <BiExit onClick={exitUser} size="1.8em" color="white" />
+        </Wrap>
         <PaymentRegistry />
         <Wrapper>
           <PaymentBox
@@ -97,4 +107,9 @@ const PaymentBox = styled.div`
     width: 64px;
     font-weight: bold;
   }
+`;
+
+const Wrap = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
