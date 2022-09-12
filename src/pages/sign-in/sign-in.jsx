@@ -25,14 +25,12 @@ export default function SignIn() {
         email: userLogin.email,
         password: userLogin.password,
       });
-      console.log(data.data);
       setUser(data.data);
       const JSONauth = JSON.stringify({
         token: data.data.token,
         name: data.data.name,
       });
       localStorage.setItem("mywallet", JSONauth);
-      console.log(data);
       navigate("/home");
     } catch (error) {
       setError({

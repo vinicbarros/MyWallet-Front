@@ -63,6 +63,7 @@ const Container = styled.div`
   border-radius: 5px;
   height: 68vh;
   margin-top: 22px;
+  overflow: scroll;
 
   h1 {
     position: absolute;
@@ -83,13 +84,16 @@ const TransactionBox = styled.main`
 `;
 
 const Balance = styled.div`
+  height: 34px;
+  width: 92%;
+  align-items: center;
+  background-color: #ffffff;
   display: flex;
   justify-content: space-between;
   position: absolute;
-  bottom: 10px;
+  bottom: 0px;
   left: 0px;
   margin: 0px 0px 0px 14px;
-  width: 92%;
 
   h2 {
     font-weight: bold;
