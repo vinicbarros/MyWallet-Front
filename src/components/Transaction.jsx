@@ -1,6 +1,23 @@
 import styled from "styled-components";
+import { AiOutlineClose } from "react-icons/ai";
+import { deleteTransaction } from "../services/MyWallet";
+import { useContext } from "react";
+import UserContext from "../context/userContext";
 
-export default function Transaction({ type, amount, description, date }) {
+export default function Transaction({ type, amount, description, date, id }) {
+  const { setRefresh, refresh } = useContext(UserContext);
+
+  async function deleteTransactions(id) {
+    if (window.confirm("Do you want to delete this transaction?")) {
+      try {
+        const deleted = await deleteTransaction(id);
+        setRefresh(!refresh);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
   return (
     <Wrapper>
       <Box>
@@ -11,7 +28,15 @@ export default function Transaction({ type, amount, description, date }) {
           <Description>{description}</Description>
         </Container>
       </Box>
-      <Amount type={type}>{amount}</Amount>
+      <Container>
+        <Amount type={type}>{amount}</Amount>
+        <AiOutlineClose
+          onClick={() => {
+            deleteTransactions(id);
+          }}
+          color="#C6C6C6"
+        />
+      </Container>
     </Wrapper>
   );
 }
@@ -36,6 +61,7 @@ const Description = styled.h4`
 const Amount = styled.h4`
   color: ${(props) => (props.type === "receipt" ? "#03AC00" : "#C70000")};
   font-size: 16px;
+  margin-right: 2px;
 `;
 
 const Box = styled.div`
@@ -47,4 +73,6 @@ const Box = styled.div`
   }
 `;
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+`;

@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Transaction from "./Transaction";
 import { getTransactions } from "../services/MyWallet";
+import UserContext from "../context/userContext";
 
 export default function PaymentRegistry() {
   const [transactions, setTransactions] = useState([]);
   const [sum, setSum] = useState(0.0);
 
+  const { refresh } = useContext(UserContext);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -26,7 +28,7 @@ export default function PaymentRegistry() {
       }
     }
     fetchData();
-  }, []);
+  }, [refresh]);
 
   return (
     <Container>
@@ -37,6 +39,7 @@ export default function PaymentRegistry() {
           <TransactionBox>
             {transactions.map((each, key) => (
               <Transaction
+                id={each._id}
                 key={key}
                 date={each.date}
                 description={each.description}

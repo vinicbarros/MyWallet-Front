@@ -10,10 +10,11 @@ import PrivatePage from "./components/PrivatePage";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [refresh, setRefresh] = useState(false);
   return (
     <>
       <GlobalStyle />
-      <UserContext.Provider value={{ user, setUser }}>
+      <UserContext.Provider value={{ user, setUser, refresh, setRefresh }}>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<SignIn />} />

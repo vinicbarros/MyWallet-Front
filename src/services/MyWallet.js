@@ -39,4 +39,16 @@ async function getTransactions() {
   return promise;
 }
 
-export { postSignUp, postSignIn, postTransaction, getTransactions };
+async function deleteTransaction(id) {
+  const config = createHeaders();
+  const promise = await axios.delete(`${BASE_URL}/transactions/${id}`, config);
+  return promise;
+}
+
+export {
+  postSignUp,
+  postSignIn,
+  postTransaction,
+  getTransactions,
+  deleteTransaction,
+};
