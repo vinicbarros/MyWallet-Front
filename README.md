@@ -13,7 +13,7 @@
 
 ## About
 
-I loved to build this project, it was very fun because i got deep into React features and i learned so mutch, it was my first time using Context API.
+I loved to build this project, it was very fun because i got deep into React features and i learned so mutch, it was my first time using Context API. Also this is the thirteenth project of Driven Full Stack Web Development bootcamp.
 
 ## Features
 
